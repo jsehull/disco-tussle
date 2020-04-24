@@ -14,6 +14,20 @@
     rgba(80,250,123,1) 75%)
 }
 
+.player {
+  color: blue;
+}
+
+.player.active {
+  font-size: 2em;
+  color: red;
+  transition-duration: 1s;
+}
+
+#news-feed {
+  color: coral;
+}
+
 #dance-floor {
   background: coral;
   display: flex;
