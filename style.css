@@ -1,0 +1,42 @@
+.red {    background: #ff5555 }
+.cyan {   background: #8be9fd }
+.green {  background: #50fa7b }
+.orange { background: #ffb86c }
+.pink {   background: #ff79c6 }
+.purple { background: #bd93f9 }
+.yellow { background: #f1fa8c }
+.blue {   background: #334ECC }
+.wild {
+  background: linear-gradient(
+    45deg,
+    rgba(255,85,85,1) 25%,
+    rgba(51,78,204,1) 50%,
+    rgba(80,250,123,1) 75%)
+}
+
+#dance-floor {
+  background: coral;
+  display: flex;
+  flex-wrap: wrap;
+  width: 510px;
+  height: 510px;
+  border: 1px solid gray;
+}
+
+.floor-tile {
+  background: #fff;
+  width: 100px;
+  height: 100px;
+  border: 1px solid gray;
+}
+
+
+
+/* color_= #22212C
+color_= #F8F8F2
+color_= #454158
+color_= #a2a2a2
+color_= #9580FF
+color_= #80FFEA
+color_= #FFFF80
+color_= #FF80BF */
