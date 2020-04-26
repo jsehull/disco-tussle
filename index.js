@@ -24,21 +24,17 @@ function loadDanceFloor() {
     floorTile = document.createElement('div')
     floorTile.classList.add('floor-tile')
     floorTile.setAttribute('tile-id', i)
-
-    floorTile.addEventListener('click', lightUpTile)
-    // FIXME unable to access floorTilesArr[i].color
-
+    floorTile.addEventListener('click', lightUpTile(i))
     danceFloor.appendChild(floorTile)
   }
-
 }
 
-function lightUpTile() {
-  const tileId = this.getAttribute('tile-id')
-  tilesChosen.push(floorTilesArr[tileId].color)
-  console.log(tilesChosen)
+function lightUpTile(i) {
+  console.log('click') // FIXME misfires automatically
 
-  // floorTile.classList.add(floorTilesArr[i].color)
+  const tileId = floorTile.getAttribute('tile-id')
+  tilesChosen.push(floorTilesArr[tileId].color)
+  floorTile.classList.add(floorTilesArr[i].color)
 
   getPlayerTurn()
 }
