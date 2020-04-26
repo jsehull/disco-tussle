@@ -1,17 +1,18 @@
-.red {    background: #ff5555 }
-.cyan {   background: #8be9fd }
-.green {  background: #50fa7b }
-.orange { background: #ffb86c }
-.pink {   background: #ff79c6 }
-.purple { background: #bd93f9 }
-.yellow { background: #f1fa8c }
-.blue {   background: #334ECC }
+.red {    background: #ff5555 !important }
+.cyan {   background: #8be9fd !important }
+.green {  background: #50fa7b !important }
+.orange { background: #ffb86c !important }
+.pink {   background: #ff79c6 !important }
+.purple { background: #bd93f9 !important }
+.yellow { background: #f1fa8c !important }
+.blue {   background: #334ECC !important }
 .wild {
   background: linear-gradient(
     45deg,
     rgba(255,85,85,1) 25%,
     rgba(51,78,204,1) 50%,
     rgba(80,250,123,1) 75%)
+  !important
 }
 
 #dance-floor {
