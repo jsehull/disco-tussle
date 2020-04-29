@@ -24,17 +24,15 @@ function loadDanceFloor() {
     floorTile = document.createElement('div')
     floorTile.classList.add('floor-tile')
     floorTile.setAttribute('tile-id', i)
-    floorTile.addEventListener('click', lightUpTile(i))
+    floorTile.addEventListener('click', (e) => lightUpTile(e))
     danceFloor.appendChild(floorTile)
   }
 }
 
-function lightUpTile(i) {
-  console.log('click') // FIXME misfires automatically
-
-  const tileId = floorTile.getAttribute('tile-id')
+function lightUpTile(e) {
+  const tileId = e.target.getAttribute('tile-id')
   tilesChosen.push(floorTilesArr[tileId].color)
-  floorTile.classList.add(floorTilesArr[i].color)
+  e.target.classList.add(floorTilesArr[tileId].color)
 
   getPlayerTurn()
 }
@@ -64,7 +62,7 @@ function updateNewsFeed(feedMessage) {
     // TODO - update feed on player turn change
 }
 
-function updateActivePlayer() {
+function changeActivePlayer() {
     if (playerOne.classList.contains('active')) {
       playerOne.classList.remove('active')
       playerTwo.classList.add('active')
@@ -82,6 +80,6 @@ function validateTurn() {
     updateNewsFeed('gets a BONUS turn')
   } else {
     updateNewsFeed('turn over')
-    updateActivePlayer()
+    changeActivePlayer()
   }
 }

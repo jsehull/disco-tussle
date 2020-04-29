@@ -31,6 +31,7 @@
 
 #dance-floor {
   background: coral;
+  /* TODO - transparency for linear-graduent? */
   display: flex;
   flex-wrap: wrap;
   width: 510px;
