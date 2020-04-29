@@ -30,7 +30,7 @@
 }
 
 #dance-floor {
-  background: coral;
+  /* background: coral; */
   /* TODO - transparency for linear-graduent? */
   display: flex;
   flex-wrap: wrap;
@@ -44,6 +44,10 @@
   width: 100px;
   height: 100px;
   border: 1px solid gray;
+}
+
+.floor-tile.matching {
+  opacity: 0.6;
 }
 
 
