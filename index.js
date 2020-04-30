@@ -27,8 +27,9 @@ function loadDanceFloor() {
 
 let tileEl
 let tileId
-let tilesChosen = []
 let tileElsChosen = []
+let tilesChosen = []
+let tripleMatches = []
 
 function lightUpTile(e) {
   tileEl = e.target
@@ -51,33 +52,41 @@ function validateTurn(tileElsChosen, tilesChosen) {
   let tilesMatch = tilesChosen[0].color === tilesChosen[1].color
     && tilesChosen[1].color === tilesChosen[2].color
 
-  console.log(tilesChosen)
-
   if (tilesMatch) {
-    resetPicksInFeed('You get one point')
+    resetPicksInFeed('You found a match!')
     window.setTimeout(() => {
       tileElOne.classList.add('matching')
       tileElTwo.classList.add('matching')
       tileElThree.classList.add('matching')
     }, 250)
+    tripleMatches.push(tilesChosen)
   } else if (tilesChosen.includes('wild')) {
     // FIXME no longer recognizes WILD
     resetPicksInFeed('You get a BONUS turn')
   } else {
     resetPicksInFeed('Try again')
+    resetCurrentTileSelection(tileElOne, tileElTwo, tileElThree)
+    // changeActivePlayer() // activate for multiplayer
+  }
+
+  checkGameWon()
+}
+
+function resetCurrentTileSelection(tileElOne, tileElTwo, tileElThree) {
     window.setTimeout(() => {
+      // FIXME - logs undefined
       tileElOne.classList.remove(tilesChosen[0].color)
       tileElTwo.classList.remove(tilesChosen[1].color)
       tileElThree.classList.remove(tilesChosen[2].color)
     }, 800)
-    // changeActivePlayer() // activate for multiplayer
-  }
 }
 
 let newsFeed = document.getElementById('news-feed')
 
 function showPickCountInFeed() {
-  if (tilesChosen.length === 1) {
+  if (tilesChosen.length === 0) {
+    newsFeed.innerText = '3 picks remaining'
+  } else if (tilesChosen.length === 1) {
     newsFeed.innerText = '2 picks remaining'
   } else if (tilesChosen.length === 2) {
     newsFeed.innerText = '1 picks remaining'
@@ -87,11 +96,21 @@ function showPickCountInFeed() {
 function resetPicksInFeed(feedMessage) {
     newsFeed.innerText = feedMessage
 
+    // FIXME - will show 3 picks remaining after WIN
     window.setTimeout(() => {
-      newsFeed.innerText = '3 picks remaining'
+      showPickCountInFeed()
     }, 800)
 }
 
+function checkGameWon() {
+  if (tripleMatches.length === 8) {
+    console.log('WINNER')
+    newsFeed.innerText = 'Congratulations'
+  }
+
+  tileElsChosen = []
+  tilesChosen = []
+}
 
 
 // let player = document.getElementsByClassName('player')
