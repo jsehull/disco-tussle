@@ -10,8 +10,11 @@ const floorTilesArr = [
   { color: 'wild' }
 ]
 
+floorTilesArr.sort(() => 0.5 - Math.random())
+
 const danceFloor = document.getElementById('dance-floor')
 let floorTile
+let tripleMatches = []
 
 loadDanceFloor()
 
@@ -29,7 +32,6 @@ let tileEl
 let tileId
 let tileElsChosen = []
 let tilesChosen = []
-let tripleMatches = []
 
 function lightUpTile(e) {
   tileEl = e.target
@@ -65,26 +67,25 @@ function validateTurn(tileElsChosen, tilesChosen) {
     resetPicksInFeed('You get a BONUS turn')
   } else {
     resetPicksInFeed('Try again')
-    resetCurrentTileSelection(tileElOne, tileElTwo, tileElThree)
+    resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree)
     // changeActivePlayer() // activate for multiplayer
   }
 
   checkGameWon()
 }
 
-function resetCurrentTileSelection(tileElOne, tileElTwo, tileElThree) {
-    window.setTimeout(() => {
-      // FIXME - logs undefined
-      tileElOne.classList.remove(tilesChosen[0].color)
-      tileElTwo.classList.remove(tilesChosen[1].color)
-      tileElThree.classList.remove(tilesChosen[2].color)
-    }, 800)
+function resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree) {
+  window.setTimeout(() => {
+    tileElOne.classList.remove(tilesChosen[0].color)
+    tileElTwo.classList.remove(tilesChosen[1].color)
+    tileElThree.classList.remove(tilesChosen[2].color)
+  }, 800)
 }
 
 let newsFeed = document.getElementById('news-feed')
 
 function showPickCountInFeed() {
-  if (tilesChosen.length === 0) {
+  if (tripleMatches.length !== 8 && tilesChosen.length === 0) {
     newsFeed.innerText = '3 picks remaining'
   } else if (tilesChosen.length === 1) {
     newsFeed.innerText = '2 picks remaining'
@@ -96,7 +97,6 @@ function showPickCountInFeed() {
 function resetPicksInFeed(feedMessage) {
     newsFeed.innerText = feedMessage
 
-    // FIXME - will show 3 picks remaining after WIN
     window.setTimeout(() => {
       showPickCountInFeed()
     }, 800)
