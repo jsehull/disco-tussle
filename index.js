@@ -1,3 +1,10 @@
+// TODO 1. ✅ add 'selected' class for tiles
+//   2. removeEventListener???
+// TODO - multiplayer??
+// TODO - Wild - add name: wild
+// TODO - if (contains color && #'s 1 2 3)
+
+
 const floorTilesArr = [
   { color: 'red' }, { color: 'red' }, { color: 'red' },
   { color: 'cyan' }, { color: 'cyan' }, { color: 'cyan' },
@@ -7,7 +14,7 @@ const floorTilesArr = [
   { color: 'purple' }, { color: 'purple' }, { color: 'purple' },
   { color: 'yellow' }, { color: 'yellow' }, { color: 'yellow' },
   { color: 'blue' }, { color: 'blue' }, { color: 'blue' },
-  { color: 'wild' }
+  { color: 'wild', name: 'wild' }
 ]
 
 floorTilesArr.sort(() => 0.5 - Math.random())
@@ -15,6 +22,8 @@ floorTilesArr.sort(() => 0.5 - Math.random())
 const danceFloor = document.getElementById('dance-floor')
 let floorTile
 let tripleMatches = []
+let tileElsChosen = []
+let tilesChosen = []
 
 loadDanceFloor()
 
@@ -28,17 +37,20 @@ function loadDanceFloor() {
   }
 }
 
+function clearDanceFloor() {
+  danceFloor.innerHTML = ''
+}
+
 let tileEl
 let tileId
-let tileElsChosen = []
-let tilesChosen = []
 
 function lightUpTile(e) {
   tileEl = e.target
   tileId = e.target.getAttribute('tile-id')
   tilesChosen.push(floorTilesArr[tileId])
   tileElsChosen.push(tileEl)
-  e.target.classList.add(floorTilesArr[tileId].color)
+  tileEl.classList.add('selected')
+  tileEl.classList.add(floorTilesArr[tileId].color)
 
   showPickCountInFeed()
 
@@ -62,22 +74,25 @@ function validateTurn(tileElsChosen, tilesChosen) {
       tileElThree.classList.add('matching')
     }, 250)
     tripleMatches.push(tilesChosen)
-  } else if (tilesChosen.includes('wild')) {
+  // } else if (tilesChosen.includes('wild')) { // Multiplayer only
     // FIXME no longer recognizes WILD
-    resetPicksInFeed('You get a BONUS turn')
+    // resetPicksInFeed('You get a BONUS turn')
   } else {
     resetPicksInFeed('Try again')
     resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree)
     // changeActivePlayer() // activate for multiplayer
   }
 
-  checkGameWon()
+  checkGameWon(tileElsChosen)
 }
 
 function resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree) {
   window.setTimeout(() => {
+    tileElOne.classList.remove('selected')
     tileElOne.classList.remove(tilesChosen[0].color)
+    tileElTwo.classList.remove('selected')
     tileElTwo.classList.remove(tilesChosen[1].color)
+    tileElThree.classList.remove('selected')
     tileElThree.classList.remove(tilesChosen[2].color)
   }, 800)
 }
@@ -104,14 +119,37 @@ function resetPicksInFeed(feedMessage) {
 
 function checkGameWon() {
   if (tripleMatches.length === 8) {
-    console.log('WINNER')
-    newsFeed.innerText = 'Congratulations'
+    window.setTimeout(() => {
+      showWinOverlay()
+    }, 1000)
   }
 
   tileElsChosen = []
   tilesChosen = []
 }
 
+
+const winOverlay = document.getElementById('win-overlay')
+const playAgainBtn = document.getElementById('play-again')
+
+function showWinOverlay() {
+  winOverlay.classList.add('active')
+
+  playAgainBtn.addEventListener('click', () => {
+    window.setTimeout(() => {
+      reloadDanceFloor()
+      winOverlay.classList.remove('active')
+    }, 2000)
+
+  })
+}
+
+function reloadDanceFloor() {
+  clearDanceFloor()
+  loadDanceFloor()
+  tripleMatches = []
+  showPickCountInFeed()
+}
 
 // let player = document.getElementsByClassName('player')
 // const playerOne = document.getElementById('player-one')
