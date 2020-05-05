@@ -11,6 +11,7 @@
       var(--red) 25%,
       var(--blue) 50%,
       var(--green) 75%);
+  --default-shadow: 1px 1px 2px #000;
 }
 
 .red {    background: var(--red) !important }
@@ -33,20 +34,40 @@ body {
   background: radial-gradient(circle,
     rgba(51,78,204,1) 50%,
     rgba(1,22,138,1) 100%);
-}
-
-main {
-  margin: 0 auto;
-  text-align: center;
+  font-family: sans-serif;
 }
 
 button {
-  margin: 10px auto;
+  margin: 20px auto;
   padding: 10px 20px;
-  border: none;
+  display: block;
+  background: rgba(0,0,0,0.01);
+  border: 1px solid #fff;
+  color: #fff;
+  text-shadow: var(--default-shadow)
+}
+
+button:hover {
+  cursor: pointer;
+  background: var(--wild);
+}
+
+button.clicked {
+  background: var(--wild);
+  transform: scale(0.9);
+  transition-duration: 1s;
 }
 
 
+
+#menu-card {
+  display: none;
+  color: red;
+}
+
+#menu-card.active {
+  display: block;
+}
 
 .game-title {
   color: #fff;
@@ -54,19 +75,40 @@ button {
   text-shadow: 2px 2px 10px #000;
 }
 
-/* .player {
+
+
+#game-card {
+  margin: 0 auto;
+  display: none;
+  text-align: center;
+}
+
+#game-card.active {
+  display: block;
+}
+
+#turn-box {
+  display: none;
+}
+
+#turn-box.active {
+  display: block;
+}
+
+.player {
+  display: inline-block;
   color: blue;
 }
 
 .player.active {
-  font-size: 2em;
+  font-size: 32px;
   color: red;
   transition-duration: 1s;
-} */
+}
 
 #news-feed {
   color: var(--cyan);
-  text-shadow: 1px 1px 2px #000;
+  text-shadow: var(--default-shadow)
 }
 
 #dance-floor {
@@ -76,8 +118,8 @@ button {
   width: 100%;
   max-width: 340px;
   height: 340px;
-  background-color: var(--blue);
-  background-image: var(--wild) !important;
+  background: var(--blue);
+  background: var(--wild) !important;
 }
 
 .floor-tile {
@@ -86,14 +128,13 @@ button {
   height: 62px;
   background: #fff;
   border: 1px solid black;
-  box-shadow: 1px 1px 2px #000;
+  box-shadow: var(--default-shadow)
 }
 
 .floor-tile.matching {
   opacity: 0.6;
   transform: scale(0.9);
   transition-duration: 1s;
-  transition-timing-function: ease;
 }
 
 #win-overlay {
@@ -116,29 +157,20 @@ button {
   padding: 10px;
   width: 80%;
   max-width: 400px;
-  background: var(--blue);
+  background: rgba(51,78,204,0.6);
   box-shadow: 1px 1px 10px #000;
   color: #fff;
   text-align: center;
 }
 
-#play-again {
-  background: rgba(0,0,0,0.01);
-  color: #fff;
-  border: 1px solid #fff;
-}
-
-#play-again:hover {
-  cursor: pointer;
-}
-
-#play-again:focus {
+#play-again-btn:focus {
   padding-left: 37%;
   padding-right: 37%;
   background: var(--green);
   color: var(--green);
   opacity: 1;
   transition-duration: 1.5s;
+  text-shadow: none;
 }
 
 

@@ -1,7 +1,8 @@
 // TODO 1. ✅ add 'selected' class for tiles
     //  FIXME - 2. removeEventListener???
-// TODO - multiplayer??
-// TODO - if (contains color && #'s 1 2 3)
+// TODO 1. ✅ multiplayer menu
+    //  2. turn player highlights
+    //  3. turn switch logic
 
 
 const floorTilesArr = [
@@ -17,6 +18,46 @@ const floorTilesArr = [
 ]
 
 floorTilesArr.sort(() => 0.5 - Math.random())
+
+const singlePlayerBtn = document.getElementById('one-player-game')
+const multiPlayerBtn = document.getElementById('multiplayer-game')
+const menuCard = document.getElementById('menu-card')
+const gameCard = document.getElementById('game-card')
+const playerTurnBox = document.getElementById('turn-box')
+
+getGameMode()
+
+function getGameMode() {
+  singlePlayerBtn.addEventListener('click', setSinglePlayerMode)
+  multiPlayerBtn.addEventListener('click', setMultiPlayerMode)
+}
+
+function closeMainMenu() {
+  window.setTimeout(() => {
+    menuCard.classList.remove('active')
+    gameCard.classList.add('active')
+    singlePlayerBtn.classList.remove('clicked')
+    multiPlayerBtn.classList.remove('clicked')
+  }, 1000)
+}
+
+function openMainMenu() {
+  menuCard.classList.add('active')
+  gameCard.classList.remove('active')
+}
+
+function setSinglePlayerMode() {
+  singlePlayerBtn.classList.add('clicked')
+
+  closeMainMenu()
+}
+
+function setMultiPlayerMode() {
+  multiPlayerBtn.classList.add('clicked')
+  playerTurnBox.classList.add('active')
+
+  closeMainMenu()
+}
 
 const danceFloor = document.getElementById('dance-floor')
 let floorTile
@@ -150,7 +191,8 @@ function showWildTile() {
 }
 
 const winOverlay = document.getElementById('win-overlay')
-const playAgainBtn = document.getElementById('play-again')
+const playAgainBtn = document.getElementById('play-again-btn')
+const mainMenuBtn = document.getElementById('main-menu-btn')
 
 function showWinOverlay() {
   winOverlay.classList.add('active')
@@ -161,6 +203,18 @@ function showWinOverlay() {
       winOverlay.classList.remove('active')
     }, 1500)
 
+  })
+
+  mainMenuBtn.addEventListener('click', () => {
+    mainMenuBtn.classList.add('clicked')
+
+    window.setTimeout(() => {
+      winOverlay.classList.remove('active')
+      playerTurnBox.classList.remove('active')
+      reloadDanceFloor()
+      openMainMenu()
+      mainMenuBtn.classList.remove('clicked')
+    }, 1000)
   })
 }
 

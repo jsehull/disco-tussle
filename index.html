@@ -8,8 +8,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1 class="game-title">Disco Tussle</h1>
-  <main>
+  <section id="menu-card" class="active">
+    <h1 class="game-title">Disco Tussle</h1>
+    <nav>
+      <button id="one-player-game">ONE PLAYER</button>
+      <button id="multiplayer-game">TWO PLAYER</button>
+    </nav>
+  </section>
+
+  <main id="game-card">
+    <div id="turn-box">
+      <p id="player-one" class="player active">Player One</p>
+      <p id="player-two" class="player">Player Two</p>
+    </div>
     <p id="news-feed">3 picks remaining</p>
 
     <div id="dance-floor"></div>
@@ -19,7 +30,8 @@
     <div class="container">
       <h2>Congratulations</h2>
       <p>You have won the game!</p>
-      <button id="play-again">Play Again</button>
+      <button id="play-again-btn">Play Again</button>
+      <button id="main-menu-btn">Main Menu</button>
     </div>
   </article>
 
