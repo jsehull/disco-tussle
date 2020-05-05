@@ -1,7 +1,6 @@
 // TODO 1. ✅ add 'selected' class for tiles
-//   2. removeEventListener???
+    //  FIXME - 2. removeEventListener???
 // TODO - multiplayer??
-// TODO - Wild - add name: wild
 // TODO - if (contains color && #'s 1 2 3)
 
 
@@ -14,7 +13,7 @@ const floorTilesArr = [
   { color: 'purple' }, { color: 'purple' }, { color: 'purple' },
   { color: 'yellow' }, { color: 'yellow' }, { color: 'yellow' },
   { color: 'blue' }, { color: 'blue' }, { color: 'blue' },
-  { color: 'wild', name: 'wild' }
+  { color: 'wild' }
 ]
 
 floorTilesArr.sort(() => 0.5 - Math.random())
@@ -34,6 +33,10 @@ function loadDanceFloor() {
     floorTile.setAttribute('tile-id', i)
     floorTile.addEventListener('click', (e) => lightUpTile(e))
     danceFloor.appendChild(floorTile)
+
+    if (floorTilesArr[i].color === 'wild') {
+      floorTile.id = 'wild-tile'
+    }
   }
 }
 
@@ -52,10 +55,30 @@ function lightUpTile(e) {
   tileEl.classList.add('selected')
   tileEl.classList.add(floorTilesArr[tileId].color)
 
+  // giveTileUnselectable()
   showPickCountInFeed()
 
   if (tilesChosen.length === 3) {
     validateTurn(tileElsChosen, tilesChosen)
+  }
+}
+
+// TODO
+// function giveTileUnselectable() {
+//   console.log('tileEl -', tileEl)
+//   if (tileEl.classList.contains('selected')) {
+//     console.log('test')
+//     tileEl.removeEventListener('click', () => lightUpTile())
+//   }
+// }
+
+function showPickCountInFeed() {
+  if (tripleMatches.length !== 8 && tilesChosen.length === 0) {
+    newsFeed.innerText = '3 picks remaining'
+  } else if (tilesChosen.length === 1) {
+    newsFeed.innerText = '2 picks remaining'
+  } else if (tilesChosen.length === 2) {
+    newsFeed.innerText = '1 picks remaining'
   }
 }
 
@@ -99,16 +122,6 @@ function resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThre
 
 let newsFeed = document.getElementById('news-feed')
 
-function showPickCountInFeed() {
-  if (tripleMatches.length !== 8 && tilesChosen.length === 0) {
-    newsFeed.innerText = '3 picks remaining'
-  } else if (tilesChosen.length === 1) {
-    newsFeed.innerText = '2 picks remaining'
-  } else if (tilesChosen.length === 2) {
-    newsFeed.innerText = '1 picks remaining'
-  }
-}
-
 function resetPicksInFeed(feedMessage) {
     newsFeed.innerText = feedMessage
 
@@ -119,15 +132,22 @@ function resetPicksInFeed(feedMessage) {
 
 function checkGameWon() {
   if (tripleMatches.length === 8) {
+    showWildTile()
+
     window.setTimeout(() => {
       showWinOverlay()
-    }, 1000)
+    }, 1500)
   }
 
   tileElsChosen = []
   tilesChosen = []
 }
 
+function showWildTile() {
+  window.setTimeout(() => {
+    document.getElementById('wild-tile').classList.add('wild')
+  }, 500)
+}
 
 const winOverlay = document.getElementById('win-overlay')
 const playAgainBtn = document.getElementById('play-again')
@@ -139,7 +159,7 @@ function showWinOverlay() {
     window.setTimeout(() => {
       reloadDanceFloor()
       winOverlay.classList.remove('active')
-    }, 2000)
+    }, 1500)
 
   })
 }
