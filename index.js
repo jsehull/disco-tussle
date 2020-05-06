@@ -21,6 +21,7 @@ const menuCard = document.getElementById('menu-card')
 const singlePlayerBtn = document.getElementById('one-player-game')
 const multiPlayerBtn = document.getElementById('multiplayer-game')
 const gameCard = document.getElementById('game-card')
+const overlayBox = document.getElementById('overlay-box')
 const playerTurnBox = document.getElementById('turn-box')
 
 
@@ -35,14 +36,14 @@ function loadMainMenu() {
 
 function showGameTitle() {
   window.setTimeout(() => {
-    document.getElementById('game-title').classList.add('active')
+    document.getElementById('logo').classList.add('active')
   }, 250)
 }
 
 function showGameModes() {
   window.setTimeout(() => {
     document.getElementById('menu-nav').classList.add('active')
-  }, 1250)
+  }, 2000)
 }
 
 function getGameMode() {
@@ -62,6 +63,8 @@ function closeMainMenu() {
 function openMainMenu() {
   menuCard.classList.add('active')
   gameCard.classList.remove('active')
+  gameCard.classList.remove('multi-player')
+  overlayBox.classList.remove('multi-player')
 }
 
 function setSinglePlayerMode() {
@@ -73,6 +76,8 @@ function setSinglePlayerMode() {
 function setMultiPlayerMode() {
   multiPlayerBtn.classList.add('clicked')
   playerTurnBox.classList.add('active')
+  gameCard.classList.add('multi-player')
+  overlayBox.classList.add('multi-player')
 
   closeMainMenu()
 }
