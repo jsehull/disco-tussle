@@ -17,15 +17,33 @@ const floorTilesArr = [
   { color: 'wild' }
 ]
 
-floorTilesArr.sort(() => 0.5 - Math.random())
-
+const menuCard = document.getElementById('menu-card')
 const singlePlayerBtn = document.getElementById('one-player-game')
 const multiPlayerBtn = document.getElementById('multiplayer-game')
-const menuCard = document.getElementById('menu-card')
 const gameCard = document.getElementById('game-card')
 const playerTurnBox = document.getElementById('turn-box')
 
-getGameMode()
+
+
+loadMainMenu()
+
+function loadMainMenu() {
+  showGameTitle()
+  showGameModes()
+  getGameMode()
+}
+
+function showGameTitle() {
+  window.setTimeout(() => {
+    document.getElementById('game-title').classList.add('active')
+  }, 250)
+}
+
+function showGameModes() {
+  window.setTimeout(() => {
+    document.getElementById('menu-nav').classList.add('active')
+  }, 1250)
+}
 
 function getGameMode() {
   singlePlayerBtn.addEventListener('click', setSinglePlayerMode)
@@ -68,6 +86,8 @@ let tilesChosen = []
 loadDanceFloor()
 
 function loadDanceFloor() {
+  floorTilesArr.sort(() => 0.5 - Math.random())
+
   for (let i = 0; i < floorTilesArr.length; i++) {
     floorTile = document.createElement('div')
     floorTile.classList.add('floor-tile')
