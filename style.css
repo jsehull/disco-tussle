@@ -78,14 +78,14 @@ button.clicked {
 }
 
 
-#logo {
+#menu-logo {
   margin-bottom: 30px;
   width:90%;
   max-width: 800px;
   opacity: 0;
 }
 
-#logo.active {
+#menu-logo.active {
   opacity: 1;
   transition-duration: 2s;
 }
@@ -124,36 +124,87 @@ button.clicked {
     #0575e6 30%, #021b79 75%);
 }
 
-#turn-box {
-  display: none;
+#game-logo {
+  position: absolute;
+  top: 40px;
+  width: 70%;
+  max-width: 300px;
 }
 
-#turn-box.active {
-  display: block;
+#multi-player-box {
+  display: none;
+  justify-content: space-around;
+  /* width: w/dance-floor */
+  /* max-width: w/dance-floor */
+}
+
+#multi-player-box.active {
+  display: flex;
+}
+
+.player-box {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: column;
+}
+
+#player-one {
+  color: var(--red);
+}
+
+#player-two {
+  color: var(--green);
 }
 
 .player {
+  margin: 10px 0;
   display: inline-block;
-  color: blue;
+  font-weight: bold;
+  line-height: 37px;
+  text-shadow: var(--default-shadow);
+  transition-duration: 1s;
 }
 
 .player.active {
+  color: var(--green);
   font-size: 32px;
-  color: red;
+  transition-duration: 1s;
+}
+
+#player-one-score,
+#player-two-score {
+  margin: 10px 0;
+  color: #bbb;
+  font-family: monospace;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 32px;
+  text-shadow: var(--default-shadow);
+  transition-duration: 1s;
+}
+
+#player-one-score.active,
+#player-two-score.active {
+  color: #fff;
+  font-size: 60px;
   transition-duration: 1s;
 }
 
 #news-feed {
-  color: var(--cyan);
+  color: var(--orange);
   text-shadow: var(--default-shadow)
+}
+
+#multi-player-box,
+#dance-floor {
+  width: 100%;
+  max-width: 340px;
 }
 
 #dance-floor {
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
-  max-width: 340px;
   height: 340px;
   background: var(--blue);
   background: var(--wild) !important;
@@ -175,8 +226,8 @@ button.clicked {
 }
 
 #win-overlay {
-  position: fixed;
   display: none;
+  position: fixed;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -217,6 +268,10 @@ button.clicked {
 
 
 @media (min-width: 600px) {
+  #multi-player-box {
+    max-width: 450px;
+  }
+
   #dance-floor {
     max-width: 530px;
     height: 530px;
@@ -229,9 +284,13 @@ button.clicked {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 350px) {
+  #multi-player-box,
   #dance-floor {
     max-width: 280px;
+  }
+
+  #dance-floor {
     height: 280px;
   }
 
@@ -239,6 +298,10 @@ button.clicked {
     margin: 2px;
     width: 50px;
     height: 50px;
+  }
+
+  #game-logo {
+    top: 20px;
   }
 }
 

@@ -9,8 +9,7 @@
 </head>
 <body>
   <section id="menu-card" class="active">
-    <img id="logo" src="images/logo.png" alt="Disco Tussle">
-
+    <img id="menu-logo" src="images/logo.png" alt="Disco Tussle">
     <nav id="menu-nav">
       <button id="one-player-game">ONE PLAYER</button>
       <button id="multiplayer-game">TWO PLAYER</button>
@@ -18,10 +17,18 @@
   </section>
 
   <main id="game-card">
-    <div id="turn-box">
-      <p id="player-one" class="player active">Player One</p>
-      <p id="player-two" class="player">Player Two</p>
+    <img id="game-logo" src="images/logo.png" alt="Disco Tussle">
+    <div id="multi-player-box">
+      <div class="player-box">
+        <p id="player-one" class="player active">Player One</p>
+        <p id="player-one-score" class="active"></p>
+      </div>
+      <div class="player-box">
+        <p id="player-two" class="player">Player Two</p>
+        <p id="player-two-score"></p>
+      </div>
     </div>
+
     <p id="news-feed">3 picks remaining</p>
 
     <div id="dance-floor"></div>

@@ -1,8 +1,5 @@
 // TODO 1. ✅ add 'selected' class for tiles
     //  FIXME - 2. removeEventListener???
-// TODO 1. ✅ multiplayer menu
-    //  2. turn player highlights
-    //  3. turn switch logic
 
 
 const floorTilesArr = [
@@ -22,7 +19,11 @@ const singlePlayerBtn = document.getElementById('one-player-game')
 const multiPlayerBtn = document.getElementById('multiplayer-game')
 const gameCard = document.getElementById('game-card')
 const overlayBox = document.getElementById('overlay-box')
-const playerTurnBox = document.getElementById('turn-box')
+const multiPlayerBox = document.getElementById('multi-player-box')
+const playerOneScoreEl = document.getElementById('player-one-score')
+const playerTwoScoreEl = document.getElementById('player-two-score')
+let playerOnePoints = 0;
+let playerTwoPoints = 0;
 
 
 
@@ -36,14 +37,14 @@ function loadMainMenu() {
 
 function showGameTitle() {
   window.setTimeout(() => {
-    document.getElementById('logo').classList.add('active')
+    document.getElementById('menu-logo').classList.add('active')
   }, 250)
 }
 
 function showGameModes() {
   window.setTimeout(() => {
     document.getElementById('menu-nav').classList.add('active')
-  }, 2000)
+  }, 1500)
 }
 
 function getGameMode() {
@@ -73,10 +74,14 @@ function setSinglePlayerMode() {
   closeMainMenu()
 }
 
+
 function setMultiPlayerMode() {
+  swapToPlayerOne()
   multiPlayerBtn.classList.add('clicked')
-  playerTurnBox.classList.add('active')
+  multiPlayerBox.classList.add('active')
   gameCard.classList.add('multi-player')
+  playerOneScoreEl.innerText = playerOnePoints
+  playerTwoScoreEl.innerText = playerTwoPoints
   overlayBox.classList.add('multi-player')
 
   closeMainMenu()
@@ -156,23 +161,63 @@ function validateTurn(tileElsChosen, tilesChosen) {
     && tilesChosen[1].color === tilesChosen[2].color
 
   if (tilesMatch) {
-    resetPicksInFeed('You found a match!')
+    updateNewsFeed('You found a match!')
+    updatePlayerScore()
     window.setTimeout(() => {
       tileElOne.classList.add('matching')
       tileElTwo.classList.add('matching')
       tileElThree.classList.add('matching')
     }, 250)
     tripleMatches.push(tilesChosen)
-  // } else if (tilesChosen.includes('wild')) { // Multiplayer only
-    // FIXME no longer recognizes WILD
-    // resetPicksInFeed('You get a BONUS turn')
   } else {
-    resetPicksInFeed('Try again')
+    updateNewsFeed('Try again')
     resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree)
-    // changeActivePlayer() // activate for multiplayer
+    changeActivePlayer()
   }
 
   checkGameWon(tileElsChosen)
+}
+
+const playerOne = document.getElementById('player-one')
+const playerTwo = document.getElementById('player-two')
+
+function changeActivePlayer() {
+  if (playerOne.classList.contains('active')) {
+    swapToPlayerTwo()
+  } else if (playerTwo.classList.contains('active')) {
+    swapToPlayerOne()
+  }
+}
+
+function swapToPlayerOne() {
+  playerTwo.classList.remove('active')
+  playerTwoScoreEl.classList.remove('active')
+  playerOne.classList.add('active')
+  playerOneScoreEl.classList.add('active')
+}
+
+function swapToPlayerTwo() {
+  playerOne.classList.remove('active')
+  playerOneScoreEl.classList.remove('active')
+  playerTwo.classList.add('active')
+  playerTwoScoreEl.classList.add('active')
+}
+
+function updatePlayerScore() {
+  if (playerOne.classList.contains('active')) {
+    playerOnePoints++;
+    playerOneScoreEl.innerText = playerOnePoints
+  } else if (playerTwo.classList.contains('active')) {
+    playerTwoPoints++;
+    playerTwoScoreEl.innerText = playerTwoPoints
+  }
+}
+
+function resetPlayerPoints() {
+  playerOnePoints = 0;
+  playerOneScoreEl.innerText = playerOnePoints;
+  playerTwoPoints = 0;
+  playerTwoScoreEl.innerText = playerTwoPoints;
 }
 
 function resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree) {
@@ -188,7 +233,7 @@ function resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThre
 
 let newsFeed = document.getElementById('news-feed')
 
-function resetPicksInFeed(feedMessage) {
+function updateNewsFeed(feedMessage) {
     newsFeed.innerText = feedMessage
 
     window.setTimeout(() => {
@@ -235,7 +280,7 @@ function showWinOverlay() {
 
     window.setTimeout(() => {
       winOverlay.classList.remove('active')
-      playerTurnBox.classList.remove('active')
+      multiPlayerBox.classList.remove('active')
       reloadDanceFloor()
       openMainMenu()
       mainMenuBtn.classList.remove('clicked')
@@ -246,25 +291,10 @@ function showWinOverlay() {
 function reloadDanceFloor() {
   clearDanceFloor()
   loadDanceFloor()
+  resetPlayerPoints()
   tripleMatches = []
+  tileElsChosen = []
+  tilesChosen = []
   showPickCountInFeed()
+  swapToPlayerOne()
 }
-
-// let player = document.getElementsByClassName('player')
-// const playerOne = document.getElementById('player-one')
-// const playerTwo = document.getElementById('player-two')
-
-
-// const playerAny = document.getElementsByClassName('player')
-// console.log('playerAny', playerAny)
-
-// function changeActivePlayer() { // activate for multiplayer
-//     if (playerOne.classList.contains('active')) {
-//       playerOne.classList.remove('active')
-//       playerTwo.classList.add('active')
-//     } else if (playerTwo.classList.contains('active')) {
-//       playerName.classList.remove('active')
-//       playerOne.classList.add('active')
-//       playerTwo.classList.remove('active')
-//     }
-// }
