@@ -255,6 +255,18 @@ button.clicked {
   background: rgba(5,117,230,0.9);
 }
 
+#congrats {
+  text-shadow: var(--default-shadow);
+}
+
+#congrats.text-red {
+  color: var(--red);
+}
+
+#congrats.text-green {
+  color: var(--green);
+}
+
 #play-again-btn:focus {
   padding-left: 37%;
   padding-right: 37%;

@@ -126,7 +126,7 @@ function lightUpTile(e) {
   tileEl.classList.add('selected')
   tileEl.classList.add(floorTilesArr[tileId].color)
 
-  // giveTileUnselectable()
+  // giveTileUnselectable(tileEl)
   showPickCountInFeed()
 
   if (tilesChosen.length === 3) {
@@ -134,7 +134,7 @@ function lightUpTile(e) {
   }
 }
 
-// TODO
+// FIXME
 // function giveTileUnselectable() {
 //   console.log('tileEl -', tileEl)
 //   if (tileEl.classList.contains('selected')) {
@@ -218,6 +218,8 @@ function resetPlayerPoints() {
   playerOneScoreEl.innerText = playerOnePoints;
   playerTwoPoints = 0;
   playerTwoScoreEl.innerText = playerTwoPoints;
+  congratsText.classList.remove('text-red')
+  congratsText.classList.remove('text-green')
 }
 
 function resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree) {
@@ -244,6 +246,10 @@ function updateNewsFeed(feedMessage) {
 function checkGameWon() {
   if (tripleMatches.length === 8) {
     showWildTile()
+    if (gameCard.classList.contains === 'active') {
+      checkMultiPlayerScore()
+    }
+
 
     window.setTimeout(() => {
       showWinOverlay()
@@ -263,8 +269,11 @@ function showWildTile() {
 const winOverlay = document.getElementById('win-overlay')
 const playAgainBtn = document.getElementById('play-again-btn')
 const mainMenuBtn = document.getElementById('main-menu-btn')
+const congratsText = document.getElementById('congrats')
+const winnerText = document.getElementById('winner-text')
 
 function showWinOverlay() {
+  checkMultiPlayerScore()
   winOverlay.classList.add('active')
 
   playAgainBtn.addEventListener('click', () => {
@@ -286,6 +295,20 @@ function showWinOverlay() {
       mainMenuBtn.classList.remove('clicked')
     }, 1000)
   })
+}
+
+
+function checkMultiPlayerScore() {
+  if (playerOnePoints > playerTwoPoints) {
+    congratsText.classList.add('text-red')
+    winnerText.innerText = 'Player One wins!'
+  } else if (playerOnePoints < playerTwoPoints) {
+    congratsText.classList.add('text-green')
+    winnerText.innerText = 'Player Two wins!'
+  } else {
+    congratsText.innerText = 'Tie game'
+    winnerText.innerText = "You'll have to play again!"
+  }
 }
 
 function reloadDanceFloor() {
