@@ -131,6 +131,11 @@ button.clicked {
   max-width: 300px;
 }
 
+#game-logo.clear {
+  opacity: 0;
+  transition-duration: 1s;
+}
+
 #multi-player-box {
   display: none;
   justify-content: space-around;

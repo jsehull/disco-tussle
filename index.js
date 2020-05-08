@@ -61,7 +61,7 @@ function closeMainMenu() {
   }, 1000)
 }
 
-function openMainMenu() {
+function resetMainMenu() {
   menuCard.classList.add('active')
   gameCard.classList.remove('active')
   gameCard.classList.remove('multi-player')
@@ -74,7 +74,6 @@ function setSinglePlayerMode() {
   closeMainMenu()
 }
 
-
 function setMultiPlayerMode() {
   swapToPlayerOne()
   multiPlayerBtn.classList.add('clicked')
@@ -85,6 +84,23 @@ function setMultiPlayerMode() {
   overlayBox.classList.add('multi-player')
 
   closeMainMenu()
+}
+
+returnToMainMenu()
+
+function returnToMainMenu() {
+  const gameLogo = document.getElementById('game-logo')
+
+  gameLogo.addEventListener('click', () => {
+    gameLogo.classList.add('clear')
+
+    window.setTimeout(() => {
+      resetMainMenu()
+      reloadDanceFloor()
+      multiPlayerBox.classList.remove('active')
+      gameLogo.classList.remove('clear')
+    }, 1000)
+  })
 }
 
 const danceFloor = document.getElementById('dance-floor')
@@ -291,7 +307,7 @@ function showWinOverlay() {
       winOverlay.classList.remove('active')
       multiPlayerBox.classList.remove('active')
       reloadDanceFloor()
-      openMainMenu()
+      resetMainMenu()
       mainMenuBtn.classList.remove('clicked')
     }, 1000)
   })
