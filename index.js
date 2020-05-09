@@ -1,5 +1,6 @@
 // TODO 1. ✅ add 'selected' class for tiles
-    // FIXME 2. removeEventListener???
+    //  2. ✅ removeEventListener???
+    //  3.  add EventListnere back
 
 
 const floorTilesArr = [
@@ -37,15 +38,15 @@ function loadMainMenu() {
 }
 
 function showGameTitle() {
-  window.setTimeout(() => {
+  // window.setTimeout(() => {
     document.getElementById('menu-logo').classList.add('active')
-  }, 250)
+  // }, 250)
 }
 
 function showGameModes() {
-  window.setTimeout(() => {
+  // window.setTimeout(() => {
     document.getElementById('menu-nav').classList.add('active')
-  }, 1500)
+  // }, 1500)
 }
 
 function getGameMode() {
@@ -117,13 +118,13 @@ let turnCount = 0
 loadDanceFloor()
 
 function loadDanceFloor() {
-  floorTilesArr.sort(() => 0.5 - Math.random())
+  // floorTilesArr.sort(() => 0.5 - Math.random())
 
   for (let i = 0; i < floorTilesArr.length; i++) {
     floorTile = document.createElement('div')
     floorTile.classList.add('floor-tile')
     floorTile.setAttribute('tile-id', i)
-    floorTile.addEventListener('click', (e) => lightUpTile(e))
+    floorTile.addEventListener('click', lightUpTile)
     danceFloor.appendChild(floorTile)
 
     if (floorTilesArr[i].color === 'wild') {
@@ -136,30 +137,25 @@ function clearDanceFloor() {
   danceFloor.innerHTML = ''
 }
 
-let tileEl
-let tileId
-
 function lightUpTile(e) {
-  tileEl = e.target
-  tileId = e.target.getAttribute('tile-id')
+  let tileEl = e.target
+  let tileId = e.target.getAttribute('tile-id')
   tilesChosen.push(floorTilesArr[tileId])
   tileElsChosen.push(tileEl)
   tileEl.classList.add('selected')
   tileEl.classList.add(floorTilesArr[tileId].color)
 
-  // giveTileUnselectable(tileEl)
+  giveTileUnselectable(tileEl)
   showPickCountInFeed()
   checkTurnLength()
 }
 
-// FIXME
-// function giveTileUnselectable() {
-//   console.log('tileEl -', tileEl)
-//   if (tileEl.classList.contains('selected')) {
-//     console.log('test')
-//     tileEl.removeEventListener('click', () => lightUpTile())
-//   }
-// }
+// TODO - remove THEN add back, if not a match
+function giveTileUnselectable(tileEl) {
+  if (tileEl.classList.contains('selected')) {
+    tileEl.removeEventListener('click', lightUpTile)
+  }
+}
 
 function showPickCountInFeed() {
   if (tripleMatches.length !== 8 && tilesChosen.length === 0) {
@@ -274,7 +270,7 @@ function updateNewsFeed(feedMessage) {
 }
 
 function checkGameWon() {
-  if (tripleMatches.length === 8) {
+  if (tripleMatches.length === 2) {
     showWildTile()
 
     if (singlePlayerBox.classList.contains('active')) {
@@ -313,7 +309,6 @@ function showWinOverlay() {
       reloadDanceFloor()
       winOverlay.classList.remove('active')
     }, 1500)
-
   })
 
   mainMenuBtn.addEventListener('click', () => {
