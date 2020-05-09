@@ -18,6 +18,14 @@
 
   <main id="game-card">
     <img id="game-logo" src="images/logo.png" alt="Disco Tussle">
+
+    <div id="single-player-box">
+      <div class="player-box">
+        <p id="player-none" class="player active">Turn Count</p>
+        <p id="turn-count"></p>
+      </div>
+    </div>
+
     <div id="multi-player-box">
       <div class="player-box">
         <p id="player-one" class="player active">Player One</p>
@@ -37,7 +45,7 @@
   <article id="win-overlay">
     <div id="overlay-box">
       <h2 id="congrats">Congratulations</h2>
-      <p id="winner-text">You have won the game!</p>
+      <p id="winner-text"></p>
       <button id="play-again-btn">Play Again</button>
       <button id="main-menu-btn">Main Menu</button>
     </div>

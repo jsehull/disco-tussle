@@ -1,5 +1,5 @@
 // TODO 1. ✅ add 'selected' class for tiles
-    //  FIXME - 2. removeEventListener???
+    // FIXME 2. removeEventListener???
 
 
 const floorTilesArr = [
@@ -19,6 +19,7 @@ const singlePlayerBtn = document.getElementById('one-player-game')
 const multiPlayerBtn = document.getElementById('multiplayer-game')
 const gameCard = document.getElementById('game-card')
 const overlayBox = document.getElementById('overlay-box')
+const singlePlayerBox = document.getElementById('single-player-box')
 const multiPlayerBox = document.getElementById('multi-player-box')
 const playerOneScoreEl = document.getElementById('player-one-score')
 const playerTwoScoreEl = document.getElementById('player-two-score')
@@ -70,6 +71,8 @@ function resetMainMenu() {
 
 function setSinglePlayerMode() {
   singlePlayerBtn.classList.add('clicked')
+  singlePlayerBox.classList.add('active')
+  document.getElementById('turn-count').innerText = 0
 
   closeMainMenu()
 }
@@ -97,6 +100,7 @@ function returnToMainMenu() {
     window.setTimeout(() => {
       resetMainMenu()
       reloadDanceFloor()
+      singlePlayerBox.classList.remove('active')
       multiPlayerBox.classList.remove('active')
       gameLogo.classList.remove('clear')
     }, 1000)
@@ -108,6 +112,7 @@ let floorTile
 let tripleMatches = []
 let tileElsChosen = []
 let tilesChosen = []
+let turnCount = 0
 
 loadDanceFloor()
 
@@ -144,10 +149,7 @@ function lightUpTile(e) {
 
   // giveTileUnselectable(tileEl)
   showPickCountInFeed()
-
-  if (tilesChosen.length === 3) {
-    validateTurn(tileElsChosen, tilesChosen)
-  }
+  checkTurnLength()
 }
 
 // FIXME
@@ -169,6 +171,18 @@ function showPickCountInFeed() {
   }
 }
 
+function checkTurnLength() {
+  if (tilesChosen.length === 3) {
+    updateSinglePlayerScore()
+    validateTurn(tileElsChosen, tilesChosen)
+  }
+}
+
+function updateSinglePlayerScore() {
+  turnCount++
+  document.getElementById('turn-count').innerText = turnCount
+}
+
 function validateTurn(tileElsChosen, tilesChosen) {
   const tileElOne = tileElsChosen[0]
   const tileElTwo = tileElsChosen[1]
@@ -178,7 +192,7 @@ function validateTurn(tileElsChosen, tilesChosen) {
 
   if (tilesMatch) {
     updateNewsFeed('You found a match!')
-    updatePlayerScore()
+    updateMultiPlayerScore()
     window.setTimeout(() => {
       tileElOne.classList.add('matching')
       tileElTwo.classList.add('matching')
@@ -219,7 +233,7 @@ function swapToPlayerTwo() {
   playerTwoScoreEl.classList.add('active')
 }
 
-function updatePlayerScore() {
+function updateMultiPlayerScore() {
   if (playerOne.classList.contains('active')) {
     playerOnePoints++;
     playerOneScoreEl.innerText = playerOnePoints
@@ -262,10 +276,13 @@ function updateNewsFeed(feedMessage) {
 function checkGameWon() {
   if (tripleMatches.length === 8) {
     showWildTile()
-    if (gameCard.classList.contains === 'active') {
-      checkMultiPlayerScore()
-    }
 
+    if (singlePlayerBox.classList.contains('active')) {
+      showSinglePlayerScore()
+    }
+    if (multiPlayerBox.classList.contains('active')) {
+      showMultiPlayerScore()
+    }
 
     window.setTimeout(() => {
       showWinOverlay()
@@ -289,7 +306,6 @@ const congratsText = document.getElementById('congrats')
 const winnerText = document.getElementById('winner-text')
 
 function showWinOverlay() {
-  checkMultiPlayerScore()
   winOverlay.classList.add('active')
 
   playAgainBtn.addEventListener('click', () => {
@@ -305,6 +321,7 @@ function showWinOverlay() {
 
     window.setTimeout(() => {
       winOverlay.classList.remove('active')
+      singlePlayerBox.classList.remove('active')
       multiPlayerBox.classList.remove('active')
       reloadDanceFloor()
       resetMainMenu()
@@ -313,8 +330,12 @@ function showWinOverlay() {
   })
 }
 
+function showSinglePlayerScore() {
+  congratsText.classList.add('text-cyan')
+  winnerText.innerText = 'You won in ' + turnCount + ' turns!'
+}
 
-function checkMultiPlayerScore() {
+function showMultiPlayerScore() {
   if (playerOnePoints > playerTwoPoints) {
     congratsText.classList.add('text-red')
     winnerText.innerText = 'Player One wins!'
@@ -334,6 +355,8 @@ function reloadDanceFloor() {
   tripleMatches = []
   tileElsChosen = []
   tilesChosen = []
+  turnCount = 0
+  document.getElementById('turn-count').innerText = 0
   showPickCountInFeed()
   swapToPlayerOne()
 }

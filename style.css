@@ -136,6 +136,7 @@ button.clicked {
   transition-duration: 1s;
 }
 
+#single-player-box,
 #multi-player-box {
   display: none;
   justify-content: space-around;
@@ -143,6 +144,7 @@ button.clicked {
   /* max-width: w/dance-floor */
 }
 
+#single-player-box.active,
 #multi-player-box.active {
   display: flex;
 }
@@ -151,6 +153,10 @@ button.clicked {
   display: flex;
   justify-content: space-around;
   flex-flow: column;
+}
+
+#player-none {
+  color: var(--cyan)
 }
 
 #player-one {
@@ -171,11 +177,11 @@ button.clicked {
 }
 
 .player.active {
-  color: var(--green);
   font-size: 32px;
   transition-duration: 1s;
 }
 
+#turn-count,
 #player-one-score,
 #player-two-score {
   margin: 10px 0;
@@ -188,6 +194,7 @@ button.clicked {
   transition-duration: 1s;
 }
 
+#turn-count,
 #player-one-score.active,
 #player-two-score.active {
   color: #fff;
@@ -264,6 +271,10 @@ button.clicked {
   text-shadow: var(--default-shadow);
 }
 
+#congrats.text-cyan {
+  color: var(--cyan);
+}
+
 #congrats.text-red {
   color: var(--red);
 }
@@ -285,6 +296,7 @@ button.clicked {
 
 
 @media (min-width: 600px) {
+  #single-player-box,
   #multi-player-box {
     max-width: 450px;
   }
@@ -302,6 +314,7 @@ button.clicked {
 }
 
 @media (max-width: 350px) {
+  #single-player-box,
   #multi-player-box,
   #dance-floor {
     max-width: 280px;
