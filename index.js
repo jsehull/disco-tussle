@@ -1,8 +1,3 @@
-// TODO 1. ✅ add 'selected' class for tiles
-    //  2. ✅ removeEventListener???
-    //  3.  add EventListnere back
-
-
 const floorTilesArr = [
   { color: 'red' }, { color: 'red' }, { color: 'red' },
   { color: 'cyan' }, { color: 'cyan' }, { color: 'cyan' },
@@ -38,15 +33,15 @@ function loadMainMenu() {
 }
 
 function showGameTitle() {
-  // window.setTimeout(() => {
+  window.setTimeout(() => {
     document.getElementById('menu-logo').classList.add('active')
-  // }, 250)
+  }, 250)
 }
 
 function showGameModes() {
-  // window.setTimeout(() => {
+  window.setTimeout(() => {
     document.getElementById('menu-nav').classList.add('active')
-  // }, 1500)
+  }, 1500)
 }
 
 function getGameMode() {
@@ -118,7 +113,7 @@ let turnCount = 0
 loadDanceFloor()
 
 function loadDanceFloor() {
-  // floorTilesArr.sort(() => 0.5 - Math.random())
+  floorTilesArr.sort(() => 0.5 - Math.random())
 
   for (let i = 0; i < floorTilesArr.length; i++) {
     floorTile = document.createElement('div')
@@ -145,13 +140,12 @@ function lightUpTile(e) {
   tileEl.classList.add('selected')
   tileEl.classList.add(floorTilesArr[tileId].color)
 
-  giveTileUnselectable(tileEl)
+  removeTileSelect(tileEl)
   showPickCountInFeed()
   checkTurnLength()
 }
 
-// TODO - remove THEN add back, if not a match
-function giveTileUnselectable(tileEl) {
+function removeTileSelect(tileEl) {
   if (tileEl.classList.contains('selected')) {
     tileEl.removeEventListener('click', lightUpTile)
   }
@@ -196,8 +190,11 @@ function validateTurn(tileElsChosen, tilesChosen) {
     }, 250)
     tripleMatches.push(tilesChosen)
   } else {
-    updateNewsFeed('Try again')
+    tileElOne.addEventListener('click', lightUpTile)
+    tileElTwo.addEventListener('click', lightUpTile)
+    tileElThree.addEventListener('click', lightUpTile)
     resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree)
+    updateNewsFeed('Try again')
     changeActivePlayer()
   }
 
@@ -270,7 +267,7 @@ function updateNewsFeed(feedMessage) {
 }
 
 function checkGameWon() {
-  if (tripleMatches.length === 2) {
+  if (tripleMatches.length === 8) {
     showWildTile()
 
     if (singlePlayerBox.classList.contains('active')) {
