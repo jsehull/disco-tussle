@@ -35,6 +35,7 @@ body {
   height: 100vh;
   background: #000;
   font-family: sans-serif;
+  touch-action: manipulation;
 }
 
 button {
