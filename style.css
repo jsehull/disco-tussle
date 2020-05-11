@@ -229,7 +229,8 @@ button.clicked {
   height: 62px;
   background: #fff;
   border: 1px solid black;
-  box-shadow: var(--default-shadow)
+  box-shadow: var(--default-shadow);
+  touch-action: manipulation;
 }
 
 .floor-tile.matching {
