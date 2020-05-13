@@ -115,6 +115,8 @@ loadDanceFloor()
 function loadDanceFloor() {
   let tileId = 0
 
+  floorTilesArr.sort(() => 0.5 - Math.random())
+
   for (let tile of floorTilesArr) {
     tileDiv = document.createElement('div')
     tileDiv.classList.add('floor-tile')
