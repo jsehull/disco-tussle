@@ -17,10 +17,10 @@ const gameCard = document.getElementById('game-card')
 const overlayBox = document.getElementById('overlay-box')
 const singlePlayerBox = document.getElementById('single-player-box')
 const multiPlayerBox = document.getElementById('multi-player-box')
-const playerOneScoreEl = document.getElementById('player-one-score')
-const playerTwoScoreEl = document.getElementById('player-two-score')
-let playerOnePoints = 0;
-let playerTwoPoints = 0;
+const p1ScoreEl = document.getElementById('player-one-score')
+const p2ScoreEl = document.getElementById('player-two-score')
+let p1Points = 0;
+let p2Points = 0;
 
 
 
@@ -78,8 +78,8 @@ function setMultiPlayerMode() {
   multiPlayerBtn.classList.add('clicked')
   multiPlayerBox.classList.add('active')
   gameCard.classList.add('multi-player')
-  playerOneScoreEl.innerText = playerOnePoints
-  playerTwoScoreEl.innerText = playerTwoPoints
+  p1ScoreEl.innerText = p1Points
+  p2ScoreEl.innerText = p2Points
   overlayBox.classList.add('multi-player')
 
   closeMainMenu()
@@ -104,26 +104,28 @@ function returnToMainMenu() {
 }
 
 const danceFloor = document.getElementById('dance-floor')
-let floorTile
 let tripleMatches = []
 let tileElsChosen = []
 let tilesChosen = []
 let turnCount = 0
 
+
 loadDanceFloor()
 
 function loadDanceFloor() {
-  floorTilesArr.sort(() => 0.5 - Math.random())
+  let tileId = 0
 
-  for (let i = 0; i < floorTilesArr.length; i++) {
-    floorTile = document.createElement('div')
-    floorTile.classList.add('floor-tile')
-    floorTile.setAttribute('tile-id', i)
-    floorTile.addEventListener('click', lightUpTile)
-    danceFloor.appendChild(floorTile)
+  for (let tile of floorTilesArr) {
+    tileDiv = document.createElement('div')
+    tileDiv.classList.add('floor-tile')
+    tileDiv.setAttribute('tile-id', tileId)
+    tileId++
+    tileDiv.addEventListener('click', lightUpTile)
+    danceFloor.appendChild(tileDiv)
 
-    if (floorTilesArr[i].color === 'wild') {
-      floorTile.id = 'wild-tile'
+    if (tile.color === 'wild') {
+      tileDiv.tileId = 'wild-tile'
+      tileDiv.id = 'wild-tile'
     }
   }
 }
@@ -174,9 +176,9 @@ function updateSinglePlayerScore() {
 }
 
 function validateTurn(tileElsChosen, tilesChosen) {
-  const tileElOne = tileElsChosen[0]
-  const tileElTwo = tileElsChosen[1]
-  const tileElThree = tileElsChosen[2]
+  const t1 = tileElsChosen[0]
+  const t2 = tileElsChosen[1]
+  const t3 = tileElsChosen[2]
   let tilesMatch = tilesChosen[0].color === tilesChosen[1].color
     && tilesChosen[1].color === tilesChosen[2].color
 
@@ -184,16 +186,16 @@ function validateTurn(tileElsChosen, tilesChosen) {
     updateNewsFeed('You found a match!')
     updateMultiPlayerScore()
     window.setTimeout(() => {
-      tileElOne.classList.add('matching')
-      tileElTwo.classList.add('matching')
-      tileElThree.classList.add('matching')
+      t1.classList.add('matching')
+      t2.classList.add('matching')
+      t3.classList.add('matching')
     }, 250)
     tripleMatches.push(tilesChosen)
   } else {
-    tileElOne.addEventListener('click', lightUpTile)
-    tileElTwo.addEventListener('click', lightUpTile)
-    tileElThree.addEventListener('click', lightUpTile)
-    resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree)
+    t1.addEventListener('click', lightUpTile)
+    t2.addEventListener('click', lightUpTile)
+    t3.addEventListener('click', lightUpTile)
+    resetCurrentTileSelection(tilesChosen, t1, t2, t3)
     updateNewsFeed('Try again')
     changeActivePlayer()
   }
@@ -201,58 +203,58 @@ function validateTurn(tileElsChosen, tilesChosen) {
   checkGameWon(tileElsChosen)
 }
 
-const playerOne = document.getElementById('player-one')
-const playerTwo = document.getElementById('player-two')
+const p1 = document.getElementById('player-one')
+const p2 = document.getElementById('player-two')
 
 function changeActivePlayer() {
-  if (playerOne.classList.contains('active')) {
+  if (p1.classList.contains('active')) {
     swapToPlayerTwo()
-  } else if (playerTwo.classList.contains('active')) {
+  } else if (p2.classList.contains('active')) {
     swapToPlayerOne()
   }
 }
 
 function swapToPlayerOne() {
-  playerTwo.classList.remove('active')
-  playerTwoScoreEl.classList.remove('active')
-  playerOne.classList.add('active')
-  playerOneScoreEl.classList.add('active')
+  p2.classList.remove('active')
+  p2ScoreEl.classList.remove('active')
+  p1.classList.add('active')
+  p1ScoreEl.classList.add('active')
 }
 
 function swapToPlayerTwo() {
-  playerOne.classList.remove('active')
-  playerOneScoreEl.classList.remove('active')
-  playerTwo.classList.add('active')
-  playerTwoScoreEl.classList.add('active')
+  p1.classList.remove('active')
+  p1ScoreEl.classList.remove('active')
+  p2.classList.add('active')
+  p2ScoreEl.classList.add('active')
 }
 
 function updateMultiPlayerScore() {
-  if (playerOne.classList.contains('active')) {
-    playerOnePoints++;
-    playerOneScoreEl.innerText = playerOnePoints
-  } else if (playerTwo.classList.contains('active')) {
-    playerTwoPoints++;
-    playerTwoScoreEl.innerText = playerTwoPoints
+  if (p1.classList.contains('active')) {
+    p1Points++;
+    p1ScoreEl.innerText = p1Points
+  } else if (p2.classList.contains('active')) {
+    p2Points++;
+    p2ScoreEl.innerText = p2Points
   }
 }
 
 function resetPlayerPoints() {
-  playerOnePoints = 0;
-  playerOneScoreEl.innerText = playerOnePoints;
-  playerTwoPoints = 0;
-  playerTwoScoreEl.innerText = playerTwoPoints;
+  p1Points = 0;
+  p1ScoreEl.innerText = p1Points;
+  p2Points = 0;
+  p2ScoreEl.innerText = p2Points;
   congratsText.classList.remove('text-red')
   congratsText.classList.remove('text-green')
 }
 
-function resetCurrentTileSelection(tilesChosen, tileElOne, tileElTwo, tileElThree) {
+function resetCurrentTileSelection(tilesChosen, t1, t2, t3) {
   window.setTimeout(() => {
-    tileElOne.classList.remove('selected')
-    tileElOne.classList.remove(tilesChosen[0].color)
-    tileElTwo.classList.remove('selected')
-    tileElTwo.classList.remove(tilesChosen[1].color)
-    tileElThree.classList.remove('selected')
-    tileElThree.classList.remove(tilesChosen[2].color)
+    t1.classList.remove('selected')
+    t1.classList.remove(tilesChosen[0].color)
+    t2.classList.remove('selected')
+    t2.classList.remove(tilesChosen[1].color)
+    t3.classList.remove('selected')
+    t3.classList.remove(tilesChosen[2].color)
   }, 800)
 }
 
@@ -328,10 +330,10 @@ function showSinglePlayerScore() {
 }
 
 function showMultiPlayerScore() {
-  if (playerOnePoints > playerTwoPoints) {
+  if (p1Points > p2Points) {
     congratsText.classList.add('text-red')
     winnerText.innerText = 'Player One wins!'
-  } else if (playerOnePoints < playerTwoPoints) {
+  } else if (p1Points < p2Points) {
     congratsText.classList.add('text-green')
     winnerText.innerText = 'Player Two wins!'
   } else {
@@ -351,4 +353,5 @@ function reloadDanceFloor() {
   document.getElementById('turn-count').innerText = 0
   showPickCountInFeed()
   swapToPlayerOne()
+  congratsText.innerText = 'Congrats'
 }
