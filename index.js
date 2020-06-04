@@ -10,6 +10,11 @@ const floorTilesArr = [
   { color: 'wild' }
 ]
 
+const DELAY_ACTIVE_MATCHING = 250
+const DELAY_TURN_CHOICES = 800 // un'select' & pick count in feed
+const DELAY_MAIN_MENU = 1000
+const DELAY_WIN_OVERLAY = 1500
+
 const menuCard = document.getElementById('menu-card')
 const singlePlayerBtn = document.getElementById('one-player-game')
 const multiPlayerBtn = document.getElementById('multiplayer-game')
@@ -35,13 +40,13 @@ function loadMainMenu() {
 function showGameTitle() {
   window.setTimeout(() => {
     document.getElementById('menu-logo').classList.add('active')
-  }, 250)
+  }, DELAY_ACTIVE_MATCHING)
 }
 
 function showGameModes() {
   window.setTimeout(() => {
     document.getElementById('menu-nav').classList.add('active')
-  }, 1500)
+  }, DELAY_MAIN_MENU)
 }
 
 function getGameMode() {
@@ -55,7 +60,7 @@ function closeMainMenu() {
     gameCard.classList.add('active')
     singlePlayerBtn.classList.remove('clicked')
     multiPlayerBtn.classList.remove('clicked')
-  }, 1000)
+  }, DELAY_MAIN_MENU)
 }
 
 function resetMainMenu() {
@@ -99,7 +104,7 @@ function returnToMainMenu() {
       singlePlayerBox.classList.remove('active')
       multiPlayerBox.classList.remove('active')
       gameLogo.classList.remove('clear')
-    }, 1000)
+    }, DELAY_MAIN_MENU)
   })
 }
 
@@ -191,7 +196,7 @@ function validateTurn(tileElsChosen, tilesChosen) {
       t1.classList.add('matching')
       t2.classList.add('matching')
       t3.classList.add('matching')
-    }, 250)
+    }, DELAY_ACTIVE_MATCHING)
     tripleMatches.push(tilesChosen)
   } else {
     t1.addEventListener('click', lightUpTile)
@@ -257,7 +262,7 @@ function resetCurrentTileSelection(tilesChosen, t1, t2, t3) {
     t2.classList.remove(tilesChosen[1].color)
     t3.classList.remove('selected')
     t3.classList.remove(tilesChosen[2].color)
-  }, 800)
+  }, DELAY_TURN_CHOICES)
 }
 
 let newsFeed = document.getElementById('news-feed')
@@ -267,7 +272,7 @@ function updateNewsFeed(feedMessage) {
 
     window.setTimeout(() => {
       showPickCountInFeed()
-    }, 800)
+    }, DELAY_TURN_CHOICES)
 }
 
 function checkGameWon() {
@@ -283,7 +288,7 @@ function checkGameWon() {
 
     window.setTimeout(() => {
       showWinOverlay()
-    }, 1500)
+    }, DELAY_MAIN_MENU)
   }
 
   tileElsChosen = []
@@ -293,7 +298,7 @@ function checkGameWon() {
 function showWildTile() {
   window.setTimeout(() => {
     document.getElementById('wild-tile').classList.add('wild')
-  }, 500)
+  }, DELAY_ACTIVE_MATCHING)
 }
 
 const winOverlay = document.getElementById('win-overlay')
@@ -309,7 +314,7 @@ function showWinOverlay() {
     window.setTimeout(() => {
       reloadDanceFloor()
       winOverlay.classList.remove('active')
-    }, 1500)
+    }, DELAY_MAIN_MENU)
   })
 
   mainMenuBtn.addEventListener('click', () => {
@@ -322,7 +327,7 @@ function showWinOverlay() {
       reloadDanceFloor()
       resetMainMenu()
       mainMenuBtn.classList.remove('clicked')
-    }, 1000)
+    }, DELAY_MAIN_MENU)
   })
 }
 
